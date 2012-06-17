@@ -41,7 +41,7 @@ public final class AboutBox extends JDialog {
 
 	// Tag used for Robocode icon source replacement
 	private final static String TAG_ROBOCODE_ICON_SRC = "<robocode:icon-src>";
-	private final static String TAG_CODEFEST_LOGO_SRC = "<robocode:codefest-logo-src>";
+	private final static String SPHERE_LOGO_SRC = "<robocode:sphere-logo-src>";
 
 	
 	
@@ -62,10 +62,12 @@ public final class AboutBox extends JDialog {
 			+ "&copy;&nbsp;Copyright 2001, 2011<br>Mathew A. Nelson and <br>Robocode contributors</td>"+
 			" <td align=\"right\"><b>Version: </b>"
 			+ TAG_ROBOCODE_VERSION
+			+ "<img src=\"" + SPHERE_LOGO_SRC + "\">"
+			+ "<br><b>Sphere Combat Arena: </b><a href=\"http://combatarena.sphere.pl\">Home</a>"
 			+ "<br><b>Virtual Combat: </b><a href=\"http://www.itbhu.ac.in/codefest/event.php?name=virtual%20combat\">Home</a> | <a href='#'>Forum</a>"+
 			"<br><b>Robocode: </b><a href=\"http://robocode.sourceforge.net\">Home</a>&nbsp;|&nbsp;<a href=\"http://robowiki.net\">RoboWiki</a><br>&nbsp;</td></tr></table><center>"
-			+ "<b>This application is developed for <a href=\"http://www.itbhu.ac.in/codefest/event.php?name=virtual%20combat\">Virtual Combat</a> " 
-			+ "</b><br>Originally implemented by Joshua Galecki and contributed by Himanshu Singh <br><br>"
+			+ "<b>This application is developed for <a href=\"http://combatarena.sphere.pl\">Sphere Combat Arena</a> " 
+			+ "</b><br>Originally implemented by Joshua Galecki and contributed by Himanshu Singh and <a href=\"http://sphere.pl\">Sphere Interest Group</a><br><br>"
 			+ "<b>Original Author</b><br>Designed and programmed by <b><font color=\"green\">Mathew A. Nelson</font></b><br>"
 			+ "Graphics by <b><font color=\"green\">Garett S. Hourihan</font></b><br>"
 			+ "</b>Application is based on version 1.7.1.4 of Robocode<br><br>"
@@ -100,7 +102,7 @@ public final class AboutBox extends JDialog {
 	// Robocode icon URL
 	private final java.net.URL iconURL;
 
-	private final java.net.URL codefestIconURL;
+	private final java.net.URL sphereIconURL;
 	// Content pane
 	private JPanel aboutBoxContentPane;
 	// Main panel
@@ -140,10 +142,10 @@ public final class AboutBox extends JDialog {
 		robocodeVersion = versionManager.getVersion();
 
 		iconURL = AboutBox.class.getResource("/net/sf/robocode/ui/icons/robocode-icon.png");
-		codefestIconURL = AboutBox.class.getResource("/net/sf/robocode/ui/icons/codefest-logo.png");
+		sphereIconURL = AboutBox.class.getResource("/net/sf/robocode/ui/icons/sphere-logo.png");
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("About Virtual Combat (based on Robocode)");
+		setTitle("About Sphere Combat Arena (based on Virtual Combat Robocode)");
 		setContentPane(getAboutBoxContentPane());
 		setResizable(false);
 	}
@@ -189,7 +191,7 @@ public final class AboutBox extends JDialog {
 
 	private String getHtmlText() {
 		if (htmlText == null) {
-			htmlText = HTML_TEMPLATE.replaceAll(TAG_ROBOCODE_VERSION, robocodeVersion).replaceAll(TAG_ROBOCODE_ICON_SRC, iconURL.toString()).replaceAll(TAG_CODEFEST_LOGO_SRC, codefestIconURL.toString()).replaceAll(TAG_SYSCOLOR_CTRL_HIGHLIGHT, toHtmlColor(BG_COLOR)).replaceAll(TAG_JAVA_VERSION, System.getProperty("java.version")).replaceAll(
+			htmlText = HTML_TEMPLATE.replaceAll(TAG_ROBOCODE_VERSION, robocodeVersion).replaceAll(TAG_ROBOCODE_ICON_SRC, iconURL.toString()).replaceAll(SPHERE_LOGO_SRC, sphereIconURL.toString()).replaceAll(TAG_SYSCOLOR_CTRL_HIGHLIGHT, toHtmlColor(BG_COLOR)).replaceAll(TAG_JAVA_VERSION, System.getProperty("java.version")).replaceAll(
 					TAG_JAVA_VENDOR, System.getProperty("java.vendor"));
 		}
 		return htmlText;
