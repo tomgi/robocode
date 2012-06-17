@@ -456,6 +456,12 @@ public final class Battle extends BaseBattle {
 		// At this point the unsafe loader thread will now set itself to wait for a notify
 
 		for (RobotPeer robotPeer : robots) {
+			robotPeer.setX(-1000);
+			robotPeer.setY(-1000);
+			robotPeer.updateBoundingBox();
+		}
+		
+		for (RobotPeer robotPeer : robots) {
 			robotPeer.initializeRound(robots, initialRobotPositions);
 			robotPeer.println("=========================");
 			robotPeer.println("Round " + (getRoundNum() + 1) + " of " + getNumRounds());
