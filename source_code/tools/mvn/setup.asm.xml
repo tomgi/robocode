@@ -106,10 +106,9 @@
 
                     <!-- sample robots -->
                     <dependencySet>
-                        <excludes>
-                            <exclude>net.sf.robocode:robocode.content</exclude>
-                            <exclude>net.sf.robocode:robocode.installer</exclude>
-                        </excludes>
+                        <includes>
+                		<include>net.sf.robocode:robocode.samples</include>
+            		</includes>
                         <outputDirectory>robots</outputDirectory>
                         <unpack>true</unpack>
                         <unpackOptions>
