@@ -37,13 +37,11 @@ public interface IWindowManagerExt extends IWindowManager {
 
 	void showOnlineHelp();
 	
-	void showCodeFestVirtualCombatForum();
+	void showSphereCombatArenaHome();
 	
-	void showCodeFestVirtualCombatHome();
+	void showSphereHome();
 	
-	void showCodeFestHome();
-	
-	void showCodeFestPromoVideo();
+	void showSphereVideo();
 
 	void showJavaDocumentation();
 

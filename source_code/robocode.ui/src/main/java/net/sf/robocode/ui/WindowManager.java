@@ -253,20 +253,16 @@ public class WindowManager implements IWindowManagerExt {
 		showInBrowser("http://robowiki.net/w/index.php?title=Robocode/Getting_Started");
 	}
 	
-	public void showCodeFestVirtualCombatForum() {
-		showInBrowser("http://www.itbhu.ac.in/codefest/forum/viewforum.php?f=14");
+	public void showSphereCombatArenaHome() {
+		showInBrowser("http://combatarena.sphere.pl");
 	}
 	
-	public void showCodeFestVirtualCombatHome() {
-		showInBrowser("http://www.itbhu.ac.in/codefest/event.php?name=virtual%20combat");
+	public void showSphereHome() {
+		showInBrowser("http://sphere.pl");
 	}
 	
-	public void showCodeFestHome() {
-		showInBrowser("http://www.itbhu.ac.in/codefest");
-	}
-	
-	public void showCodeFestPromoVideo() {
-		showInBrowser("http://www.youtube.com/codefest");
+	public void showSphereVideo() {
+		showInBrowser("http://www.youtube.com/SphereEti");
 	}
 
 	public void showJavaDocumentation() {

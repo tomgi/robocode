@@ -84,12 +84,11 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem optionsRecalculateCpuConstantMenuItem;
 	private JMenuItem optionsCleanRobotCacheMenuItem;
 
-	// CodeFest menu
-	private JMenu CodeFestMenu;
-	private JMenuItem CodeFestVirtualCombatForumMenuItem;
-	private JMenuItem CodeFestVirtualCombatHomeMenuItem;
-	private JMenuItem CodeFestHomeMenuItem;
-	private JMenuItem CodeFestPromoVideoMenuItem;
+	// Sphere menu
+	private JMenu sphereMenu;
+	private JMenuItem sphereCombatArenaHomeMenuItem;
+	private JMenuItem sphereHomeMenuItem;
+	private JMenuItem sphereVideoMenuItem;
 	
 	// Help Menu
 	private JMenu helpMenu;
@@ -153,18 +152,20 @@ public class MenuBar extends JMenuBar {
 				optionsRecalculateCpuConstantPerformed();
 			} else if (source == mb.getOptionsCleanRobotCacheMenuItem()) {
 				optionsCleanRobotCachePerformed();
-
-				// Virtual Combat menu
-			} else if (source == mb.getCodeFestVirtualCombatForumMenuItem()) {
-				CodeFestVirtualCombatForumActionPerformed();
-			} else if (source == mb.getCodeFestVirtualCombatHomeMenuItem()) {
-				CodeFestVirtualCombatHomeActionPerformed();
-			} else if (source == mb.getCodeFestHomeMenuItem()) {
-				CodeFestHomeActionPerformed();
-			} else if (source == mb.getCodeFestPromoVideoMenuItem()) {
-				CodeFestPromoVideoActionPerformed();	
+			}
+				
+				// Sphere Combat Arena menu
+			else if (source == mb.getSphereCombatArenaHomeMenuItem()) {
+				sphereCombatArenaHomeActionPerformed();
+			} else if (source == mb.getSphereHomeMenuItem()) {
+				sphereHomeActionPerformed();
+			} else if (source == mb.getSphereVideoMenuItem()) {
+				sphereVideoActionPerformed();	
+				
+			}
+			
 				// Help menu
-			} else if (source == mb.getHelpOnlineHelpMenuItem()) {
+			else if (source == mb.getHelpOnlineHelpMenuItem()) {
 				helpOnlineHelpActionPerformed();
 			} else if (source == mb.getHelpRobocodeApiMenuItem()) {
 				helpRobocodeApiActionPerformed();
@@ -620,45 +621,35 @@ public class MenuBar extends JMenuBar {
 		}
 		return helpOnlineHelpMenuItem;
 	}
-
-	private JMenuItem getCodeFestVirtualCombatForumMenuItem() {
-		if (CodeFestVirtualCombatForumMenuItem == null) {
-			CodeFestVirtualCombatForumMenuItem = new JMenuItem();
-			CodeFestVirtualCombatForumMenuItem.setText("Virtual Combat Forum");
-			CodeFestVirtualCombatForumMenuItem.setMnemonic('F');
-			CodeFestVirtualCombatForumMenuItem.addActionListener(eventHandler);
+	
+	private JMenuItem getSphereCombatArenaHomeMenuItem() {
+		if (sphereCombatArenaHomeMenuItem == null) {
+			sphereCombatArenaHomeMenuItem = new JMenuItem();
+			sphereCombatArenaHomeMenuItem.setText("Sphere Combat Arena Home");
+			sphereCombatArenaHomeMenuItem.setMnemonic('H');
+			sphereCombatArenaHomeMenuItem.addActionListener(eventHandler);
 		}
-		return CodeFestVirtualCombatForumMenuItem;
+		return sphereCombatArenaHomeMenuItem;
 	}
 	
-	private JMenuItem getCodeFestVirtualCombatHomeMenuItem() {
-		if (CodeFestVirtualCombatHomeMenuItem == null) {
-			CodeFestVirtualCombatHomeMenuItem = new JMenuItem();
-			CodeFestVirtualCombatHomeMenuItem.setText("Virtual Combat Home");
-			CodeFestVirtualCombatHomeMenuItem.setMnemonic('H');
-			CodeFestVirtualCombatHomeMenuItem.addActionListener(eventHandler);
+	private JMenuItem getSphereHomeMenuItem() {
+		if (sphereHomeMenuItem == null) {
+			sphereHomeMenuItem = new JMenuItem();
+			sphereHomeMenuItem.setText("Sphere Interest Group");
+			sphereHomeMenuItem.setMnemonic('C');
+			sphereHomeMenuItem.addActionListener(eventHandler);
 		}
-		return CodeFestVirtualCombatHomeMenuItem;
+		return sphereHomeMenuItem;
 	}
 	
-	private JMenuItem getCodeFestHomeMenuItem() {
-		if (CodeFestHomeMenuItem == null) {
-			CodeFestHomeMenuItem = new JMenuItem();
-			CodeFestHomeMenuItem.setText("CodeFest Home");
-			CodeFestHomeMenuItem.setMnemonic('C');
-			CodeFestHomeMenuItem.addActionListener(eventHandler);
+	private JMenuItem getSphereVideoMenuItem() {
+		if (sphereVideoMenuItem == null) {
+			sphereVideoMenuItem = new JMenuItem();
+			sphereVideoMenuItem.setText("Promotional Video");
+			sphereVideoMenuItem.setMnemonic('V');
+			sphereVideoMenuItem.addActionListener(eventHandler);
 		}
-		return CodeFestHomeMenuItem;
-	}
-	
-	private JMenuItem getCodeFestPromoVideoMenuItem() {
-		if (CodeFestPromoVideoMenuItem == null) {
-			CodeFestPromoVideoMenuItem = new JMenuItem();
-			CodeFestPromoVideoMenuItem.setText("Promotional Video");
-			CodeFestPromoVideoMenuItem.setMnemonic('V');
-			CodeFestPromoVideoMenuItem.addActionListener(eventHandler);
-		}
-		return CodeFestPromoVideoMenuItem;
+		return sphereVideoMenuItem;
 	}
 	
 	private JMenuItem getHelpVersionsTxtMenuItem() {
@@ -828,17 +819,16 @@ public class MenuBar extends JMenuBar {
 	}
 
 	private JMenu getCodeFestMenu() {
-		if (CodeFestMenu == null) {
-			CodeFestMenu = new JMenu();
-			CodeFestMenu.setText("CodeFest");
-			CodeFestMenu.setMnemonic('C');
-			CodeFestMenu.add(getCodeFestHomeMenuItem());
-			CodeFestMenu.add(getCodeFestVirtualCombatHomeMenuItem());
-			CodeFestMenu.add(getCodeFestVirtualCombatForumMenuItem());
-			CodeFestMenu.add(getCodeFestPromoVideoMenuItem());
-			CodeFestMenu.addMenuListener(eventHandler);
+		if (sphereMenu == null) {
+			sphereMenu = new JMenu();
+			sphereMenu.setText("Sphere");
+			sphereMenu.setMnemonic('C');
+			sphereMenu.add(getSphereHomeMenuItem());
+			sphereMenu.add(getSphereCombatArenaHomeMenuItem());
+			sphereMenu.add(getSphereVideoMenuItem());
+			sphereMenu.addMenuListener(eventHandler);
 		}
-		return CodeFestMenu;
+		return sphereMenu;
 	}
 	
 	public JMenu getRobotMenu() {
@@ -899,20 +889,16 @@ public class MenuBar extends JMenuBar {
 		windowManager.showOnlineHelp();
 	}
 	
-	private void CodeFestVirtualCombatForumActionPerformed() {
-		windowManager.showCodeFestVirtualCombatForum();
+	private void sphereCombatArenaHomeActionPerformed() {
+		windowManager.showSphereCombatArenaHome();
 	}
 	
-	private void CodeFestVirtualCombatHomeActionPerformed() {
-		windowManager.showCodeFestVirtualCombatHome();
+	private void sphereHomeActionPerformed() {
+		windowManager.showSphereHome();
 	}
 	
-	private void CodeFestHomeActionPerformed() {
-		windowManager.showCodeFestHome();
-	}
-	
-	private void CodeFestPromoVideoActionPerformed() {
-		windowManager.showCodeFestPromoVideo();
+	private void sphereVideoActionPerformed() {
+		windowManager.showSphereVideo();
 	}
 
 	private void helpVersionsTxtActionPerformed() {
