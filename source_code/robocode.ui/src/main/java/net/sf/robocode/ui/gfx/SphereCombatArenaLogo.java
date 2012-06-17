@@ -10,38 +10,36 @@
  *******************************************************************************/
 package net.sf.robocode.ui.gfx;
 
-
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 
 import net.sf.robocode.io.FileUtil;
 
-
 public class SphereCombatArenaLogo {
 
 	public final static int WIDTH = 800;
 	public final static int HEIGHT = 620;
-	
+
 	public void insertVClogo(Graphics graphics) {
 		Graphics2D g = (Graphics2D) graphics;
 		drawVClogo(g);
-}
+	}
+
 	private void drawVClogo(Graphics2D g) {
 		Image image = null;
-		File file = new File(FileUtil.getImagesDir(), "sphere-background-image.jpg");
+		File file = new File(FileUtil.getImagesDir(),
+				"sphere-background-image.png");
 		try {
 			image = ImageIO.read(file);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		g.drawImage(image, 0, 0, null);	
+		g.drawImage(image, 0, 0, null);
 	}
 }
