@@ -26,7 +26,6 @@
  *******************************************************************************/
 package net.sf.robocode.ui.dialog;
 
-
 import net.sf.robocode.battle.IBattleManager;
 import net.sf.robocode.host.ICpuManager;
 import net.sf.robocode.recording.BattleRecordFormat;
@@ -45,10 +44,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-
 /**
  * Handles menu display and interaction for Robocode.
- *
+ * 
  * @author Mathew A. Nelson (original)
  * @author Flemming N. Larsen (contributor)
  * @author Matthew Reeder (contributor)
@@ -84,12 +82,19 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem optionsRecalculateCpuConstantMenuItem;
 	private JMenuItem optionsCleanRobotCacheMenuItem;
 
+	// CodeFest menu
+	private JMenu CodeFestMenu;
+	private JMenuItem CodeFestVirtualCombatForumMenuItem;
+	private JMenuItem CodeFestVirtualCombatHomeMenuItem;
+	private JMenuItem CodeFestHomeMenuItem;
+	private JMenuItem CodeFestPromoVideoMenuItem;
+
 	// Sphere menu
 	private JMenu sphereMenu;
 	private JMenuItem sphereCombatArenaHomeMenuItem;
 	private JMenuItem sphereHomeMenuItem;
 	private JMenuItem sphereVideoMenuItem;
-	
+
 	// Help Menu
 	private JMenu helpMenu;
 	private JMenuItem helpOnlineHelpMenuItem;
@@ -153,18 +158,29 @@ public class MenuBar extends JMenuBar {
 			} else if (source == mb.getOptionsCleanRobotCacheMenuItem()) {
 				optionsCleanRobotCachePerformed();
 			}
-				
-				// Sphere Combat Arena menu
+
+			// Virtual Combat menu
+			else if (source == mb.getCodeFestVirtualCombatForumMenuItem()) {
+				CodeFestVirtualCombatForumActionPerformed();
+			} else if (source == mb.getCodeFestVirtualCombatHomeMenuItem()) {
+				CodeFestVirtualCombatHomeActionPerformed();
+			} else if (source == mb.getCodeFestHomeMenuItem()) {
+				CodeFestHomeActionPerformed();
+			} else if (source == mb.getCodeFestPromoVideoMenuItem()) {
+				CodeFestPromoVideoActionPerformed();
+			}
+
+			// Sphere Combat Arena menu
 			else if (source == mb.getSphereCombatArenaHomeMenuItem()) {
 				sphereCombatArenaHomeActionPerformed();
 			} else if (source == mb.getSphereHomeMenuItem()) {
 				sphereHomeActionPerformed();
 			} else if (source == mb.getSphereVideoMenuItem()) {
-				sphereVideoActionPerformed();	
-				
+				sphereVideoActionPerformed();
+
 			}
-			
-				// Help menu
+
+			// Help menu
 			else if (source == mb.getHelpOnlineHelpMenuItem()) {
 				helpOnlineHelpActionPerformed();
 			} else if (source == mb.getHelpRobocodeApiMenuItem()) {
@@ -198,7 +214,8 @@ public class MenuBar extends JMenuBar {
 			battleManager.pauseBattle();
 		}
 
-		public void menuCanceled(MenuEvent e) {}
+		public void menuCanceled(MenuEvent e) {
+		}
 	}
 
 	public final MenuBar.EventHandler eventHandler = new EventHandler();
@@ -211,18 +228,18 @@ public class MenuBar extends JMenuBar {
 	private final ICpuManager cpuManager;
 
 	public MenuBar(ISettingsManager properties,
-			IWindowManagerExt windowManager,
-			IBattleManager battleManager,
-			IRecordManager recordManager,
-			ICpuManager cpuManager) {
+			IWindowManagerExt windowManager, IBattleManager battleManager,
+			IRecordManager recordManager, ICpuManager cpuManager) {
 		this.properties = properties;
 		this.windowManager = windowManager;
 		this.battleManager = battleManager;
 		this.recordManager = recordManager;
 		this.cpuManager = cpuManager;
 
-		// FNL: Make sure that menus are heavy-weight components so that the menus are not painted
-		// behind the BattleView which is a heavy-weight component. This must be done before
+		// FNL: Make sure that menus are heavy-weight components so that the
+		// menus are not painted
+		// behind the BattleView which is a heavy-weight component. This must be
+		// done before
 		// adding any menu to the menubar.
 		JPopupMenu.setDefaultLightWeightPopupEnabled(false);
 
@@ -230,6 +247,7 @@ public class MenuBar extends JMenuBar {
 		add(getRobotMenu());
 		add(getOptionsMenu());
 		add(getCodeFestMenu());
+		add(getSphereMenu());
 		add(getHelpMenu());
 	}
 
@@ -245,18 +263,21 @@ public class MenuBar extends JMenuBar {
 	 * Handle battleNew menu item action
 	 */
 	private void battleNewActionPerformed() {
-		windowManager.showNewBattleDialog(battleManager.getBattleProperties(), false);
+		windowManager.showNewBattleDialog(battleManager.getBattleProperties(),
+				false);
 	}
 
 	private void battleOpenActionPerformed() {
 		try {
 			battleManager.pauseBattle();
 
-			String path = windowManager.showBattleOpenDialog(".battle", "Battles");
+			String path = windowManager.showBattleOpenDialog(".battle",
+					"Battles");
 
 			if (path != null) {
 				battleManager.setBattleFilename(path);
-				windowManager.showNewBattleDialog(battleManager.loadBattleProperties(), true);
+				windowManager.showNewBattleDialog(
+						battleManager.loadBattleProperties(), true);
 			}
 		} finally {
 			battleManager.resumeBattle();
@@ -269,7 +290,8 @@ public class MenuBar extends JMenuBar {
 			String path = battleManager.getBattleFilename();
 
 			if (path == null) {
-				path = windowManager.saveBattleDialog(battleManager.getBattlePath(), ".battle", "Battles");
+				path = windowManager.saveBattleDialog(
+						battleManager.getBattlePath(), ".battle", "Battles");
 			}
 			if (path != null) {
 				battleManager.setBattleFilename(path);
@@ -284,7 +306,8 @@ public class MenuBar extends JMenuBar {
 		try {
 			battleManager.pauseBattle();
 
-			String path = windowManager.saveBattleDialog(battleManager.getBattlePath(), ".battle", "Battles");
+			String path = windowManager.saveBattleDialog(
+					battleManager.getBattlePath(), ".battle", "Battles");
 
 			if (path != null) {
 				battleManager.setBattleFilename(path);
@@ -312,7 +335,8 @@ public class MenuBar extends JMenuBar {
 
 				try {
 					robocodeFrame.setBusyPointer(true);
-					recordManager.loadRecord(path, BattleRecordFormat.BINARY_ZIP);
+					recordManager.loadRecord(path,
+							BattleRecordFormat.BINARY_ZIP);
 				} finally {
 					robocodeFrame.setBusyPointer(false);
 				}
@@ -327,7 +351,8 @@ public class MenuBar extends JMenuBar {
 		try {
 			battleManager.pauseBattle();
 
-			String path = windowManager.showBattleOpenDialog(".br.xml", "XML Records");
+			String path = windowManager.showBattleOpenDialog(".br.xml",
+					"XML Records");
 
 			if (path != null) {
 				battleManager.stop(true);
@@ -356,12 +381,14 @@ public class MenuBar extends JMenuBar {
 			try {
 				battleManager.pauseBattle();
 
-				String path = windowManager.saveBattleDialog(battleManager.getBattlePath(), ".br", "Records");
+				String path = windowManager.saveBattleDialog(
+						battleManager.getBattlePath(), ".br", "Records");
 
 				if (path != null) {
 					try {
 						robocodeFrame.setBusyPointer(true);
-						recordManager.saveRecord(path, BattleRecordFormat.BINARY_ZIP);
+						recordManager.saveRecord(path,
+								BattleRecordFormat.BINARY_ZIP);
 					} finally {
 						robocodeFrame.setBusyPointer(false);
 					}
@@ -377,7 +404,9 @@ public class MenuBar extends JMenuBar {
 			try {
 				battleManager.pauseBattle();
 
-				String path = windowManager.saveBattleDialog(battleManager.getBattlePath(), ".br.xml", "XML Records");
+				String path = windowManager
+						.saveBattleDialog(battleManager.getBattlePath(),
+								".br.xml", "XML Records");
 
 				if (path != null) {
 					try {
@@ -431,7 +460,8 @@ public class MenuBar extends JMenuBar {
 			battleNewMenuItem = new JMenuItem();
 			battleNewMenuItem.setText("New");
 			battleNewMenuItem.setMnemonic('N');
-			battleNewMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, MENU_SHORTCUT_KEY_MASK, false));
+			battleNewMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_N, MENU_SHORTCUT_KEY_MASK, false));
 			battleNewMenuItem.addActionListener(eventHandler);
 		}
 		return battleNewMenuItem;
@@ -442,7 +472,8 @@ public class MenuBar extends JMenuBar {
 			battleOpenMenuItem = new JMenuItem();
 			battleOpenMenuItem.setText("Open");
 			battleOpenMenuItem.setMnemonic('O');
-			battleOpenMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, MENU_SHORTCUT_KEY_MASK, false));
+			battleOpenMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_O, MENU_SHORTCUT_KEY_MASK, false));
 			battleOpenMenuItem.addActionListener(eventHandler);
 		}
 		return battleOpenMenuItem;
@@ -454,8 +485,9 @@ public class MenuBar extends JMenuBar {
 			battleSaveAsMenuItem.setText("Save As");
 			battleSaveAsMenuItem.setMnemonic('A');
 			battleSaveAsMenuItem.setDisplayedMnemonicIndex(5);
-			battleSaveAsMenuItem.setAccelerator(
-					KeyStroke.getKeyStroke(KeyEvent.VK_S, MENU_SHORTCUT_KEY_MASK | InputEvent.SHIFT_MASK, false));
+			battleSaveAsMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_S, MENU_SHORTCUT_KEY_MASK
+							| InputEvent.SHIFT_MASK, false));
 			battleSaveAsMenuItem.setEnabled(false);
 			battleSaveAsMenuItem.addActionListener(eventHandler);
 		}
@@ -467,7 +499,8 @@ public class MenuBar extends JMenuBar {
 			battleSaveMenuItem = new JMenuItem();
 			battleSaveMenuItem.setText("Save");
 			battleSaveMenuItem.setMnemonic('S');
-			battleSaveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, MENU_SHORTCUT_KEY_MASK, false));
+			battleSaveMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_S, MENU_SHORTCUT_KEY_MASK, false));
 			battleSaveMenuItem.setEnabled(false);
 			battleSaveMenuItem.addActionListener(eventHandler);
 		}
@@ -479,8 +512,9 @@ public class MenuBar extends JMenuBar {
 			battleOpenRecordMenuItem = new JMenuItem();
 			battleOpenRecordMenuItem.setText("Open Record");
 			battleOpenRecordMenuItem.setMnemonic('d');
-			battleOpenRecordMenuItem.setAccelerator(
-					KeyStroke.getKeyStroke(KeyEvent.VK_O, MENU_SHORTCUT_KEY_MASK | InputEvent.SHIFT_MASK, false));
+			battleOpenRecordMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_O, MENU_SHORTCUT_KEY_MASK
+							| InputEvent.SHIFT_MASK, false));
 			battleOpenRecordMenuItem.addActionListener(eventHandler);
 		}
 		return battleOpenRecordMenuItem;
@@ -491,8 +525,8 @@ public class MenuBar extends JMenuBar {
 			battleImportRecordMenuItem = new JMenuItem();
 			battleImportRecordMenuItem.setText("Import XML Record");
 			battleImportRecordMenuItem.setMnemonic('I');
-			battleImportRecordMenuItem.setAccelerator(
-					KeyStroke.getKeyStroke(KeyEvent.VK_I, MENU_SHORTCUT_KEY_MASK, false));
+			battleImportRecordMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_I, MENU_SHORTCUT_KEY_MASK, false));
 			battleImportRecordMenuItem.addActionListener(eventHandler);
 		}
 		return battleImportRecordMenuItem;
@@ -504,19 +538,21 @@ public class MenuBar extends JMenuBar {
 			battleSaveRecordAsMenuItem.setText("Save Record");
 			battleSaveRecordAsMenuItem.setMnemonic('R');
 			battleSaveRecordAsMenuItem.setDisplayedMnemonicIndex(5);
-			battleSaveRecordAsMenuItem.setAccelerator(
-					KeyStroke.getKeyStroke(KeyEvent.VK_R, MENU_SHORTCUT_KEY_MASK, false));
+			battleSaveRecordAsMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_R, MENU_SHORTCUT_KEY_MASK, false));
 			battleSaveRecordAsMenuItem.setEnabled(false);
 			battleSaveRecordAsMenuItem.addActionListener(eventHandler);
 
 			ISettingsManager props = properties;
 
-			props.addPropertyListener(
-					new ISettingsListener() {
+			props.addPropertyListener(new ISettingsListener() {
 				public void settingChanged(String property) {
-					if (property.equals(ISettingsManager.OPTIONS_COMMON_ENABLE_REPLAY_RECORDING)) {
-						final boolean canReplayRecord = recordManager.hasRecord();
-						final boolean enableSaveRecord = properties.getOptionsCommonEnableReplayRecording()
+					if (property
+							.equals(ISettingsManager.OPTIONS_COMMON_ENABLE_REPLAY_RECORDING)) {
+						final boolean canReplayRecord = recordManager
+								.hasRecord();
+						final boolean enableSaveRecord = properties
+								.getOptionsCommonEnableReplayRecording()
 								& canReplayRecord;
 
 						battleSaveRecordAsMenuItem.setEnabled(enableSaveRecord);
@@ -532,19 +568,21 @@ public class MenuBar extends JMenuBar {
 			battleExportRecordMenuItem = new JMenuItem();
 			battleExportRecordMenuItem.setText("Export XML Record");
 			battleExportRecordMenuItem.setMnemonic('E');
-			battleExportRecordMenuItem.setAccelerator(
-					KeyStroke.getKeyStroke(KeyEvent.VK_X, MENU_SHORTCUT_KEY_MASK, false));
+			battleExportRecordMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_X, MENU_SHORTCUT_KEY_MASK, false));
 			battleExportRecordMenuItem.setEnabled(false);
 			battleExportRecordMenuItem.addActionListener(eventHandler);
 
 			ISettingsManager props = properties;
 
-			props.addPropertyListener(
-					new ISettingsListener() {
+			props.addPropertyListener(new ISettingsListener() {
 				public void settingChanged(String property) {
-					if (property.equals(ISettingsManager.OPTIONS_COMMON_ENABLE_REPLAY_RECORDING)) {
-						final boolean canReplayRecord = recordManager.hasRecord();
-						final boolean enableSaveRecord = properties.getOptionsCommonEnableReplayRecording()
+					if (property
+							.equals(ISettingsManager.OPTIONS_COMMON_ENABLE_REPLAY_RECORDING)) {
+						final boolean canReplayRecord = recordManager
+								.hasRecord();
+						final boolean enableSaveRecord = properties
+								.getOptionsCommonEnableReplayRecording()
 								& canReplayRecord;
 
 						battleExportRecordMenuItem.setEnabled(enableSaveRecord);
@@ -621,7 +659,47 @@ public class MenuBar extends JMenuBar {
 		}
 		return helpOnlineHelpMenuItem;
 	}
-	
+
+	private JMenuItem getCodeFestVirtualCombatForumMenuItem() {
+		if (CodeFestVirtualCombatForumMenuItem == null) {
+			CodeFestVirtualCombatForumMenuItem = new JMenuItem();
+			CodeFestVirtualCombatForumMenuItem.setText("Virtual Combat Forum");
+			CodeFestVirtualCombatForumMenuItem.setMnemonic('F');
+			CodeFestVirtualCombatForumMenuItem.addActionListener(eventHandler);
+		}
+		return CodeFestVirtualCombatForumMenuItem;
+	}
+
+	private JMenuItem getCodeFestVirtualCombatHomeMenuItem() {
+		if (CodeFestVirtualCombatHomeMenuItem == null) {
+			CodeFestVirtualCombatHomeMenuItem = new JMenuItem();
+			CodeFestVirtualCombatHomeMenuItem.setText("Virtual Combat Home");
+			CodeFestVirtualCombatHomeMenuItem.setMnemonic('H');
+			CodeFestVirtualCombatHomeMenuItem.addActionListener(eventHandler);
+		}
+		return CodeFestVirtualCombatHomeMenuItem;
+	}
+
+	private JMenuItem getCodeFestHomeMenuItem() {
+		if (CodeFestHomeMenuItem == null) {
+			CodeFestHomeMenuItem = new JMenuItem();
+			CodeFestHomeMenuItem.setText("CodeFest Home");
+			CodeFestHomeMenuItem.setMnemonic('C');
+			CodeFestHomeMenuItem.addActionListener(eventHandler);
+		}
+		return CodeFestHomeMenuItem;
+	}
+
+	private JMenuItem getCodeFestPromoVideoMenuItem() {
+		if (CodeFestPromoVideoMenuItem == null) {
+			CodeFestPromoVideoMenuItem = new JMenuItem();
+			CodeFestPromoVideoMenuItem.setText("Promotional Video");
+			CodeFestPromoVideoMenuItem.setMnemonic('V');
+			CodeFestPromoVideoMenuItem.addActionListener(eventHandler);
+		}
+		return CodeFestPromoVideoMenuItem;
+	}
+
 	private JMenuItem getSphereCombatArenaHomeMenuItem() {
 		if (sphereCombatArenaHomeMenuItem == null) {
 			sphereCombatArenaHomeMenuItem = new JMenuItem();
@@ -631,7 +709,7 @@ public class MenuBar extends JMenuBar {
 		}
 		return sphereCombatArenaHomeMenuItem;
 	}
-	
+
 	private JMenuItem getSphereHomeMenuItem() {
 		if (sphereHomeMenuItem == null) {
 			sphereHomeMenuItem = new JMenuItem();
@@ -641,7 +719,7 @@ public class MenuBar extends JMenuBar {
 		}
 		return sphereHomeMenuItem;
 	}
-	
+
 	private JMenuItem getSphereVideoMenuItem() {
 		if (sphereVideoMenuItem == null) {
 			sphereVideoMenuItem = new JMenuItem();
@@ -651,7 +729,7 @@ public class MenuBar extends JMenuBar {
 		}
 		return sphereVideoMenuItem;
 	}
-	
+
 	private JMenuItem getHelpVersionsTxtMenuItem() {
 		if (helpVersionsTxtMenuItem == null) {
 			helpVersionsTxtMenuItem = new JMenuItem();
@@ -751,10 +829,12 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem getOptionsRecalculateCpuConstantMenuItem() {
 		if (optionsRecalculateCpuConstantMenuItem == null) {
 			optionsRecalculateCpuConstantMenuItem = new JMenuItem();
-			optionsRecalculateCpuConstantMenuItem.setText("Recalculate CPU constant");
+			optionsRecalculateCpuConstantMenuItem
+					.setText("Recalculate CPU constant");
 			optionsRecalculateCpuConstantMenuItem.setMnemonic('e');
 			optionsRecalculateCpuConstantMenuItem.setDisplayedMnemonicIndex(1);
-			optionsRecalculateCpuConstantMenuItem.addActionListener(eventHandler);
+			optionsRecalculateCpuConstantMenuItem
+					.addActionListener(eventHandler);
 		}
 		return optionsRecalculateCpuConstantMenuItem;
 	}
@@ -801,8 +881,10 @@ public class MenuBar extends JMenuBar {
 			robotEditorMenuItem = new JMenuItem();
 			robotEditorMenuItem.setText("Editor");
 			robotEditorMenuItem.setMnemonic('E');
-			robotEditorMenuItem.setVisible(net.sf.robocode.core.Container.getComponent(IRobocodeEditor.class) != null);
-			robotEditorMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, MENU_SHORTCUT_KEY_MASK, false));
+			robotEditorMenuItem.setVisible(net.sf.robocode.core.Container
+					.getComponent(IRobocodeEditor.class) != null);
+			robotEditorMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+					KeyEvent.VK_E, MENU_SHORTCUT_KEY_MASK, false));
 			robotEditorMenuItem.addActionListener(eventHandler);
 		}
 		return robotEditorMenuItem;
@@ -819,6 +901,20 @@ public class MenuBar extends JMenuBar {
 	}
 
 	private JMenu getCodeFestMenu() {
+		if (CodeFestMenu == null) {
+			CodeFestMenu = new JMenu();
+			CodeFestMenu.setText("CodeFest");
+			CodeFestMenu.setMnemonic('C');
+			CodeFestMenu.add(getCodeFestHomeMenuItem());
+			CodeFestMenu.add(getCodeFestVirtualCombatHomeMenuItem());
+			CodeFestMenu.add(getCodeFestVirtualCombatForumMenuItem());
+			CodeFestMenu.add(getCodeFestPromoVideoMenuItem());
+			CodeFestMenu.addMenuListener(eventHandler);
+		}
+		return CodeFestMenu;
+	}
+
+	private JMenu getSphereMenu() {
 		if (sphereMenu == null) {
 			sphereMenu = new JMenu();
 			sphereMenu.setText("Sphere");
@@ -830,7 +926,7 @@ public class MenuBar extends JMenuBar {
 		}
 		return sphereMenu;
 	}
-	
+
 	public JMenu getRobotMenu() {
 		if (robotMenu == null) {
 			robotMenu = new JMenu();
@@ -888,15 +984,31 @@ public class MenuBar extends JMenuBar {
 	private void helpOnlineHelpActionPerformed() {
 		windowManager.showOnlineHelp();
 	}
-	
+
+	private void CodeFestVirtualCombatForumActionPerformed() {
+		windowManager.showCodeFestVirtualCombatForum();
+	}
+
+	private void CodeFestVirtualCombatHomeActionPerformed() {
+		windowManager.showCodeFestVirtualCombatHome();
+	}
+
+	private void CodeFestHomeActionPerformed() {
+		windowManager.showCodeFestHome();
+	}
+
+	private void CodeFestPromoVideoActionPerformed() {
+		windowManager.showCodeFestPromoVideo();
+	}
+
 	private void sphereCombatArenaHomeActionPerformed() {
 		windowManager.showSphereCombatArenaHome();
 	}
-	
+
 	private void sphereHomeActionPerformed() {
 		windowManager.showSphereHome();
 	}
-	
+
 	private void sphereVideoActionPerformed() {
 		windowManager.showSphereVideo();
 	}
@@ -937,11 +1049,13 @@ public class MenuBar extends JMenuBar {
 	}
 
 	private void optionsShowRankingActionPerformed() {
-		windowManager.showRankingDialog(getOptionsShowRankingCheckBoxMenuItem().getState());
+		windowManager.showRankingDialog(getOptionsShowRankingCheckBoxMenuItem()
+				.getState());
 	}
 
 	private void optionsRecalculateCpuConstantPerformed() {
-		int ok = JOptionPane.showConfirmDialog(this, "Do you want to recalculate the CPU constant?",
+		int ok = JOptionPane.showConfirmDialog(this,
+				"Do you want to recalculate the CPU constant?",
 				"Recalculate CPU constant", JOptionPane.YES_NO_OPTION);
 
 		if (ok == JOptionPane.YES_OPTION) {
@@ -954,13 +1068,15 @@ public class MenuBar extends JMenuBar {
 
 			long cpuConstant = cpuManager.getCpuConstant();
 
-			JOptionPane.showMessageDialog(this, "CPU constant: " + cpuConstant + " nanoseconds per turn",
-					"New CPU constant", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "CPU constant: " + cpuConstant
+					+ " nanoseconds per turn", "New CPU constant",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
 	private void optionsCleanRobotCachePerformed() {
-		int ok = JOptionPane.showConfirmDialog(this, "Do you want to clean the robot cache?", "Clean Robot Cache",
+		int ok = JOptionPane.showConfirmDialog(this,
+				"Do you want to clean the robot cache?", "Clean Robot Cache",
 				JOptionPane.YES_NO_OPTION);
 
 		if (ok == JOptionPane.YES_OPTION) {

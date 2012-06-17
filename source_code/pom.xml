@@ -9,7 +9,7 @@
         <relativePath>tools/commonpom</relativePath>
     </parent>
     <groupId>net.sf.robocode</groupId>
-    <artifactId>virtual-combat</artifactId>
+    <artifactId>sphere-combat-arena</artifactId>
     <version>${robocode.version}</version>
     <packaging>pom</packaging>
     <name>Robocode</name>

@@ -22,7 +22,6 @@
  *******************************************************************************/
 package net.sf.robocode.ui;
 
-
 import net.sf.robocode.battle.BattleProperties;
 import net.sf.robocode.battle.BattleResultsTableModel;
 import net.sf.robocode.battle.IBattleManager;
@@ -46,7 +45,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-
 
 /**
  * @author Mathew A. Nelson (original)
@@ -73,26 +71,32 @@ public class WindowManager implements IWindowManagerExt {
 	private boolean oldRankingHideState = true;
 	private boolean showResults = true;
 
-	public WindowManager(ISettingsManager properties, IBattleManager battleManager, ICpuManager cpuManager, IRepositoryManager repositoryManager, IImageManager imageManager, IVersionManager versionManager) {
+	public WindowManager(ISettingsManager properties,
+			IBattleManager battleManager, ICpuManager cpuManager,
+			IRepositoryManager repositoryManager, IImageManager imageManager,
+			IVersionManager versionManager) {
 		this.properties = properties;
 		this.battleManager = battleManager;
 		this.repositoryManager = repositoryManager;
-		
+
 		this.cpuManager = cpuManager;
 		this.versionManager = versionManager;
-		awtAdaptor = new AwtBattleAdaptor(battleManager, TIMER_TICKS_PER_SECOND, true);
+		awtAdaptor = new AwtBattleAdaptor(battleManager,
+				TIMER_TICKS_PER_SECOND, true);
 
 		// we will set UI better priority than robots and battle have
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Thread.currentThread().setPriority(Thread.NORM_PRIORITY + 2);
+					Thread.currentThread()
+							.setPriority(Thread.NORM_PRIORITY + 2);
 				} catch (SecurityException ex) {// that's a pity
 				}
 			}
 		});
 
-		imageManager.initialize(); // Make sure this one is initialized so all images are available
+		imageManager.initialize(); // Make sure this one is initialized so all
+									// images are available
 	}
 
 	public synchronized void addBattleListener(IBattleListener listener) {
@@ -153,7 +157,7 @@ public class WindowManager implements IWindowManagerExt {
 		if (iconified) {
 			frame.setState(Frame.ICONIFIED);
 		}
-		
+
 		if (visible) {
 			// Pack frame to size all components
 			WindowUtil.packCenterShow(frame);
@@ -174,13 +178,13 @@ public class WindowManager implements IWindowManagerExt {
 	public String showBattleOpenDialog(final String defExt, final String name) {
 		JFileChooser chooser = new JFileChooser(battleManager.getBattlePath());
 
-		chooser.setFileFilter(
-				new FileFilter() {
+		chooser.setFileFilter(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
 				return pathname.isDirectory()
-						|| pathname.getName().toLowerCase().lastIndexOf(defExt.toLowerCase())
-								== pathname.getName().length() - defExt.length();
+						|| pathname.getName().toLowerCase()
+								.lastIndexOf(defExt.toLowerCase()) == pathname
+								.getName().length() - defExt.length();
 			}
 
 			@Override
@@ -195,7 +199,8 @@ public class WindowManager implements IWindowManagerExt {
 		return null;
 	}
 
-	public String saveBattleDialog(String path, final String defExt, final String name) {
+	public String saveBattleDialog(String path, final String defExt,
+			final String name) {
 		File f = new File(path);
 
 		JFileChooser chooser;
@@ -206,8 +211,9 @@ public class WindowManager implements IWindowManagerExt {
 			@Override
 			public boolean accept(File pathname) {
 				return pathname.isDirectory()
-						|| pathname.getName().toLowerCase().lastIndexOf(defExt.toLowerCase())
-								== pathname.getName().length() - defExt.length();
+						|| pathname.getName().toLowerCase()
+								.lastIndexOf(defExt.toLowerCase()) == pathname
+								.getName().length() - defExt.length();
 			}
 
 			@Override
@@ -236,13 +242,15 @@ public class WindowManager implements IWindowManagerExt {
 	}
 
 	public void showVersionsTxt() {
-		showInBrowser("file://" + new File(FileUtil.getCwd(), "").getAbsoluteFile() + File.separator + "versions.txt");
+		showInBrowser("file://"
+				+ new File(FileUtil.getCwd(), "").getAbsoluteFile()
+				+ File.separator + "versions.txt");
 	}
 
 	public void showHelpApi() {
-		showInBrowser(
-				"file://" + new File(FileUtil.getCwd(), "").getAbsoluteFile() + File.separator + "javadoc" + File.separator
-				+ "index.html");
+		showInBrowser("file://"
+				+ new File(FileUtil.getCwd(), "").getAbsoluteFile()
+				+ File.separator + "javadoc" + File.separator + "index.html");
 	}
 
 	public void showFaq() {
@@ -252,15 +260,31 @@ public class WindowManager implements IWindowManagerExt {
 	public void showOnlineHelp() {
 		showInBrowser("http://robowiki.net/w/index.php?title=Robocode/Getting_Started");
 	}
-	
+
+	public void showCodeFestVirtualCombatForum() {
+		showInBrowser("http://www.itbhu.ac.in/codefest/forum/viewforum.php?f=14");
+	}
+
 	public void showSphereCombatArenaHome() {
 		showInBrowser("http://combatarena.sphere.pl");
 	}
-	
+
+	public void showCodeFestVirtualCombatHome() {
+		showInBrowser("http://www.itbhu.ac.in/codefest/event.php?name=virtual%20combat");
+	}
+
 	public void showSphereHome() {
 		showInBrowser("http://sphere.pl");
 	}
-	
+
+	public void showCodeFestHome() {
+		showInBrowser("http://www.itbhu.ac.in/codefest");
+	}
+
+	public void showCodeFestPromoVideo() {
+		showInBrowser("http://www.youtube.com/codefest");
+	}
+
 	public void showSphereVideo() {
 		showInBrowser("http://www.youtube.com/SphereEti");
 	}
@@ -289,28 +313,37 @@ public class WindowManager implements IWindowManagerExt {
 		try {
 			battleManager.pauseBattle();
 
-			WindowUtil.packCenterShow(getRobocodeFrame(), Container.getComponent(PreferencesDialog.class));
+			WindowUtil.packCenterShow(getRobocodeFrame(),
+					Container.getComponent(PreferencesDialog.class));
 		} finally {
-			battleManager.resumeIfPausedBattle(); // THIS is just dirty hack-fix of more complex problem with desiredTPS and pausing.  resumeBattle() belongs here.
+			battleManager.resumeIfPausedBattle(); // THIS is just dirty hack-fix
+													// of more complex problem
+													// with desiredTPS and
+													// pausing. resumeBattle()
+													// belongs here.
 		}
 	}
 
 	public void showResultsDialog(BattleCompletedEvent event) {
-		final ResultsDialog dialog = Container.getComponent(ResultsDialog.class);
+		final ResultsDialog dialog = Container
+				.getComponent(ResultsDialog.class);
 
-		dialog.setup(event.getSortedResults(), event.getBattleRules().getNumRounds());
+		dialog.setup(event.getSortedResults(), event.getBattleRules()
+				.getNumRounds());
 		packCenterShow(dialog, true);
 	}
 
 	public void showRankingDialog(boolean visible) {
-		boolean currentRankingHideState = properties.getOptionsCommonDontHideRankings();
+		boolean currentRankingHideState = properties
+				.getOptionsCommonDontHideRankings();
 
 		// Check if the Ranking hide states has changed
 		if (currentRankingHideState != oldRankingHideState) {
 			// Remove current visible RankingDialog, if it is there
 			Container.getComponent(RankingDialog.class).dispose();
 
-			// Replace old RankingDialog, as the owner window must be replaced from the constructor
+			// Replace old RankingDialog, as the owner window must be replaced
+			// from the constructor
 			Container.cache.removeComponent(RankingDialog.class);
 			Container.cache.addComponent(RankingDialog.class);
 
@@ -318,11 +351,13 @@ public class WindowManager implements IWindowManagerExt {
 			centerRankings = true;
 		}
 
-		RankingDialog rankingDialog = Container.getComponent(RankingDialog.class);
+		RankingDialog rankingDialog = Container
+				.getComponent(RankingDialog.class);
 
 		if (visible) {
 			packCenterShow(rankingDialog, centerRankings);
-			centerRankings = false; // only center the first time Rankings are shown
+			centerRankings = false; // only center the first time Rankings are
+									// shown
 		} else {
 			rankingDialog.dispose();
 		}
@@ -332,7 +367,8 @@ public class WindowManager implements IWindowManagerExt {
 	}
 
 	public void showRobocodeEditor() {
-		JFrame editor = (JFrame) net.sf.robocode.core.Container.getComponent(IRobocodeEditor.class);
+		JFrame editor = (JFrame) net.sf.robocode.core.Container
+				.getComponent(IRobocodeEditor.class);
 
 		if (!editor.isVisible()) {
 			WindowUtil.packCenterShow(editor);
@@ -347,7 +383,8 @@ public class WindowManager implements IWindowManagerExt {
 			robotPackager = null;
 		}
 
-		robotPackager = net.sf.robocode.core.Container.factory.getComponent(RobotPackager.class);
+		robotPackager = net.sf.robocode.core.Container.factory
+				.getComponent(RobotPackager.class);
 		WindowUtil.packCenterShow(robotPackager);
 	}
 
@@ -357,12 +394,14 @@ public class WindowManager implements IWindowManagerExt {
 			robotExtractor = null;
 		}
 
-		robotExtractor = new net.sf.robocode.ui.dialog.RobotExtractor(owner, this, repositoryManager);
+		robotExtractor = new net.sf.robocode.ui.dialog.RobotExtractor(owner,
+				this, repositoryManager);
 		WindowUtil.packCenterShow(robotExtractor);
 	}
 
 	public void showSplashScreen() {
-		RcSplashScreen splashScreen = Container.getComponent(RcSplashScreen.class);
+		RcSplashScreen splashScreen = Container
+				.getComponent(RcSplashScreen.class);
 
 		packCenterShow(splashScreen, true);
 
@@ -379,10 +418,12 @@ public class WindowManager implements IWindowManagerExt {
 		splashScreen.dispose();
 	}
 
-	public void showNewBattleDialog(BattleProperties battleProperties, boolean openBattle) {
+	public void showNewBattleDialog(BattleProperties battleProperties,
+			boolean openBattle) {
 		try {
 			battleManager.pauseBattle();
-			final NewBattleDialog battleDialog = Container.createComponent(NewBattleDialog.class);
+			final NewBattleDialog battleDialog = Container
+					.createComponent(NewBattleDialog.class);
 
 			battleDialog.setup(battleProperties, openBattle);
 			WindowUtil.packCenterShow(getRobocodeFrame(), battleDialog);
@@ -392,9 +433,11 @@ public class WindowManager implements IWindowManagerExt {
 	}
 
 	public boolean closeRobocodeEditor() {
-		IRobocodeEditor editor = net.sf.robocode.core.Container.getComponent(IRobocodeEditor.class);
+		IRobocodeEditor editor = net.sf.robocode.core.Container
+				.getComponent(IRobocodeEditor.class);
 
-		return editor == null || !((JFrame) editor).isVisible() || editor.close();
+		return editor == null || !((JFrame) editor).isVisible()
+				|| editor.close();
 	}
 
 	public void showCreateTeamDialog() {
@@ -427,7 +470,8 @@ public class WindowManager implements IWindowManagerExt {
 				if (idx >= 0) {
 					extension = filename.substring(idx);
 				}
-				return extension.equalsIgnoreCase(".jar") || extension.equalsIgnoreCase(".zip");
+				return extension.equalsIgnoreCase(".jar")
+						|| extension.equalsIgnoreCase(".zip");
 			}
 
 			@Override
@@ -436,7 +480,8 @@ public class WindowManager implements IWindowManagerExt {
 			}
 		});
 
-		chooser.setDialogTitle("Select the robot .jar file to copy to " + repositoryManager.getRobotsDirectory());
+		chooser.setDialogTitle("Select the robot .jar file to copy to "
+				+ repositoryManager.getRobotsDirectory());
 
 		if (chooser.showDialog(getRobocodeFrame(), "Import") == JFileChooser.APPROVE_OPTION) {
 			File inputFile = chooser.getSelectedFile();
@@ -451,30 +496,34 @@ public class WindowManager implements IWindowManagerExt {
 			if (!extension.equalsIgnoreCase(".jar")) {
 				fileName += ".jar";
 			}
-			File outputFile = new File(repositoryManager.getRobotsDirectory(), fileName);
+			File outputFile = new File(repositoryManager.getRobotsDirectory(),
+					fileName);
 
 			if (inputFile.equals(outputFile)) {
 				JOptionPane.showMessageDialog(getRobocodeFrame(),
-						outputFile.getName() + " is already in the robots directory!");
+						outputFile.getName()
+								+ " is already in the robots directory!");
 				return;
 			}
 			if (outputFile.exists()) {
-				if (JOptionPane.showConfirmDialog(getRobocodeFrame(), outputFile + " already exists.  Overwrite?",
-						"Warning", JOptionPane.YES_NO_OPTION)
-						== JOptionPane.NO_OPTION) {
+				if (JOptionPane.showConfirmDialog(getRobocodeFrame(),
+						outputFile + " already exists.  Overwrite?", "Warning",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
 					return;
 				}
 			}
 			if (JOptionPane.showConfirmDialog(getRobocodeFrame(),
-					"Robocode will now copy " + inputFile.getName() + " to " + outputFile.getParent(), "Import robot",
-					JOptionPane.OK_CANCEL_OPTION)
-					== JOptionPane.OK_OPTION) {
+					"Robocode will now copy " + inputFile.getName() + " to "
+							+ outputFile.getParent(), "Import robot",
+					JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
 				try {
 					FileUtil.copy(inputFile, outputFile);
 					repositoryManager.refresh();
-					JOptionPane.showMessageDialog(getRobocodeFrame(), "Robot imported successfully.");
+					JOptionPane.showMessageDialog(getRobocodeFrame(),
+							"Robot imported successfully.");
 				} catch (IOException e) {
-					JOptionPane.showMessageDialog(getRobocodeFrame(), "Import failed: " + e);
+					JOptionPane.showMessageDialog(getRobocodeFrame(),
+							"Import failed: " + e);
 				}
 			}
 		}
@@ -482,15 +531,16 @@ public class WindowManager implements IWindowManagerExt {
 
 	/**
 	 * Shows a web page using the browser manager.
-	 *
-	 * @param url The URL of the web page
+	 * 
+	 * @param url
+	 *            The URL of the web page
 	 */
 	private void showInBrowser(String url) {
 		try {
 			BrowserManager.openURL(url);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(getRobocodeFrame(), e.getMessage(), "Unable to open browser!",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(getRobocodeFrame(), e.getMessage(),
+					"Unable to open browser!", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -534,7 +584,8 @@ public class WindowManager implements IWindowManagerExt {
 				filename += ".csv";
 			}
 
-			boolean append = properties.getOptionsCommonAppendWhenSavingResults();
+			boolean append = properties
+					.getOptionsCommonAppendWhenSavingResults();
 
 			tableModel.saveToFile(filename, append);
 		}
@@ -542,15 +593,20 @@ public class WindowManager implements IWindowManagerExt {
 
 	/**
 	 * Packs, centers, and shows the specified window on the screen.
-	 * @param window the window to pack, center, and show
-	 * @param center {@code true} if the window must be centered; {@code false} otherwise
+	 * 
+	 * @param window
+	 *            the window to pack, center, and show
+	 * @param center
+	 *            {@code true} if the window must be centered; {@code false}
+	 *            otherwise
 	 */
 	private void packCenterShow(Window window, boolean center) {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 		window.pack();
 		if (center) {
-			window.setLocation((screenSize.width - window.getWidth()) / 2, (screenSize.height - window.getHeight()) / 2);
+			window.setLocation((screenSize.width - window.getWidth()) / 2,
+					(screenSize.height - window.getHeight()) / 2);
 		}
 		window.setVisible(true);
 	}
@@ -582,22 +638,26 @@ public class WindowManager implements IWindowManagerExt {
 
 	/**
 	 * Sets the Look and Feel (LAF). This method first try to set the LAF to the
-	 * system's LAF. If this fails, it try to use the cross platform LAF.
-	 * If this also fails, the LAF will not be changed.
+	 * system's LAF. If this fails, it try to use the cross platform LAF. If
+	 * this also fails, the LAF will not be changed.
 	 */
 	public void setLookAndFeel() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Throwable t) {
-			// Work-around for problems with setting Look and Feel described here:
+			// Work-around for problems with setting Look and Feel described
+			// here:
 			// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6468089
 			Locale.setDefault(Locale.US);
 
 			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				UIManager.setLookAndFeel(UIManager
+						.getSystemLookAndFeelClassName());
 			} catch (Throwable t2) {
-				// For some reason Ubuntu 7 can cause a NullPointerException when trying to getting the LAF
-				System.err.println("Could not set the Look and Feel (LAF).  The default LAF is used instead");
+				// For some reason Ubuntu 7 can cause a NullPointerException
+				// when trying to getting the LAF
+				System.err
+						.println("Could not set the Look and Feel (LAF).  The default LAF is used instead");
 			}
 		}
 	}
@@ -609,15 +669,19 @@ public class WindowManager implements IWindowManagerExt {
 			battleManager.setBattleFilename(intro.getPath());
 			battleManager.loadBattleProperties();
 
-			final boolean origShowResults = showResults; // save flag for showing the results
+			final boolean origShowResults = showResults; // save flag for
+															// showing the
+															// results
 
 			showResults = false;
 			try {
-				battleManager.startNewBattle(battleManager.loadBattleProperties(), true, false);
+				battleManager.startNewBattle(
+						battleManager.loadBattleProperties(), true, false);
 				battleManager.setDefaultBattleProperties();
 				robocodeFrame.afterIntroBattle();
 			} finally {
-				showResults = origShowResults; // always restore the original flag for showing the results
+				showResults = origShowResults; // always restore the original
+												// flag for showing the results
 			}
 		}
 	}

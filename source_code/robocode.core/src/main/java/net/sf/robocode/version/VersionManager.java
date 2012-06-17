@@ -56,7 +56,7 @@ public final class VersionManager implements IVersionManager {
 		BufferedReader reader = null;
 
 		try {
-			URL url = new URL("http://robocode.sourceforge.net/version/version.html");
+			URL url = new URL("http://combatarena.sphere.pl/version.html");
 
 			URLConnection urlConnection = url.openConnection();
 

@@ -541,7 +541,7 @@ public class RobocodeFrame extends JFrame {
 	private void initialize() {
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		//setTitle("Robocode");
-		setTitle("Virtual Combat (based on Robocode)");
+		setTitle("Sphere Combat Arena (based on Virtual Combat Robocode)");
 		setIconImage(ImageUtil.getImage("/net/sf/robocode/ui/icons/robocode-icon.png"));
 		setResizable(true);
 		setVisible(false);
@@ -934,7 +934,7 @@ public class RobocodeFrame extends JFrame {
 
 		private void updateTitle() {
 			//StringBuffer title = new StringBuffer("Robocode");
-			StringBuffer title = new StringBuffer("Virtual Combat (based on Robocode)");
+			StringBuffer title = new StringBuffer("Sphere Combat Arena (based on Virtual Combat Robocode)");
 
 			if (isBattleRunning) {
 				title.append(": ");

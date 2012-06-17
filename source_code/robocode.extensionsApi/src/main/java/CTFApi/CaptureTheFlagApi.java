@@ -21,7 +21,8 @@ import robocode.robotinterfaces.IObjectRobot;
  * Note that each robot must call the 'registerMe' function of this class before using any other function of this API.
  * @author Joshua Galecki (original)
  * @author Himanshu Singh (contributor)
- *
+ * @see <a target="_top" href="http://combatarena.sphere.pl">
+ *      Sphere Combat Arena</a>
  * @see <a target="_top" href="http://itbhu.ac.in/codefest">
  *      Codefest</a>
  * @see <a target="_top" href="http://itbhu.ac.in/codefest/event.php?eid=7">

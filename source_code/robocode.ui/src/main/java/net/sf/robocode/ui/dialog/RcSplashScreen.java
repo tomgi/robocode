@@ -18,6 +18,7 @@ package net.sf.robocode.ui.dialog;
 
 import net.sf.robocode.io.FileUtil;
 import net.sf.robocode.ui.gfx.RobocodeLogo;
+import net.sf.robocode.ui.gfx.SphereCombatArenaLogo;
 import net.sf.robocode.ui.gfx.VirtualCombatLogo;
 import net.sf.robocode.version.IVersionManager;
 
@@ -136,7 +137,10 @@ public class RcSplashScreen extends JWindow {
 		} else if (logo_type.equalsIgnoreCase("VIRTUALCOMBAT")){
 			splashImage = new BufferedImage(VirtualCombatLogo.WIDTH, VirtualCombatLogo.HEIGHT, BufferedImage.TYPE_INT_RGB);
 			new VirtualCombatLogo().insertVClogo(splashImage.getGraphics());
-		} else {
+		} else if (logo_type.equalsIgnoreCase("SPHERECOMBATARENA")){
+			splashImage = new BufferedImage(SphereCombatArenaLogo.WIDTH, SphereCombatArenaLogo.HEIGHT, BufferedImage.TYPE_INT_RGB);
+			new SphereCombatArenaLogo().insertVClogo(splashImage.getGraphics());
+		}  else {
 			System.out.println("Configured logo not found. Please check robocode/config/battle.properties file");
 		}
 		/*************************/

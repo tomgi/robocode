@@ -33,7 +33,7 @@ import java.util.jar.JarInputStream;
 
 
 /**
- * Installer for Virtual Combat.
+ * Installer for Sphere Combat Arena.
  *
  * @author Mathew A. Nelsen (original)
  * @author Flemming N. Larsen (contributor)
@@ -262,11 +262,11 @@ public class AutoExtract implements ActionListener {
 	}
 
 	public static void main(String argv[]) {
-		// Verify that the Java version is version 5 (1.5.0) or newer
-		if (javaVersion.startsWith("1.") && javaVersion.charAt(2) < '5') {
-			final String message = "Virtual Combat requires Java 5.0 (1.5.0) or newer.\n"
+		// Verify that the Java version is version 7 (1.7.0) or newer
+		if (javaVersion.startsWith("1.") && javaVersion.charAt(2) < '7') {
+			final String message = "Sphere Combat Arena requires Java 7.0 (1.7.0) or newer.\n"
 					+ "Your system is currently running Java " + javaVersion + ".\n"
-					+ "If you have not installed (or activated) at least\n" + "JRE 5.0 or JDK 5.0, please do so.";
+					+ "If you have not installed (or activated) at least\n" + "JRE 7.0 or JDK 7.0, please do so.";
 
 			JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
 			System.err.println(message);
@@ -288,16 +288,16 @@ public class AutoExtract implements ActionListener {
 			if (argv.length == 1) {
 				suggestedDir = new File(argv[0]);
 			} else if (File.separatorChar == '\\') {
-				suggestedDir = new File("c:\\virtual-combat\\");
+				suggestedDir = new File("c:\\sphere-combat-arena\\");
 			} else {
-				suggestedDir = new File(System.getProperty("user.home") + File.separator + "virtual-combat" + File.separator);
+				suggestedDir = new File(System.getProperty("user.home") + File.separator + "sphere-combat-arena" + File.separator);
 			}
 
 			boolean done = false;
 
 			while (!done) {
 				int rc = JOptionPane.showConfirmDialog(null,
-						"Virtual Combat will be installed in:\n" + suggestedDir + "\nIs this ok?", "Installing Virtual Combat (based on Robocode)",
+						"Sphere Combat Arena will be installed in:\n" + suggestedDir + "\nIs this ok?", "Installing Sphere Combat Arena (based on Virtual Combat Robocode)",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (rc == JOptionPane.YES_OPTION) {
@@ -320,7 +320,7 @@ public class AutoExtract implements ActionListener {
 			}
 			if (!installDir.exists()) {
 				int rc = JOptionPane.showConfirmDialog(null,
-						installDir.getPath() + "\ndoes not exist.  Would you like to create it?", "Installing Virtual Combat (based on Robocode)",
+						installDir.getPath() + "\ndoes not exist.  Would you like to create it?", "Installing Sphere Combat Arena (based on Virtual Combat Robocode)",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (rc == JOptionPane.YES_OPTION) {
@@ -339,7 +339,7 @@ public class AutoExtract implements ActionListener {
 			boolean rv = extractor.extract(installDir);
 
 			if (rv) {
-				extractor.createShortcuts(installDir, "virtual-combat.bat", "virtual-combat", "virtual-combat");
+				extractor.createShortcuts(installDir, "sphere-combat-arena.bat", "sphere-combat-arena", "sphere-combat-arena");
 			} else {
 				JOptionPane.showMessageDialog(null, extractor.message);
 			}
@@ -409,28 +409,28 @@ public class AutoExtract implements ActionListener {
 		if (osName.toLowerCase().indexOf("win") == 0) {
 			if (createWindowsShortcuts(installDir, runnable, folder, name)) {} else {
 				JOptionPane.showMessageDialog(null,
-						message + "\n" + "To start Virtual Combat, enter the following at a command prompt:\n" + "cd "
-						+ installDir.getAbsolutePath() + "\n" + "virtual-combat.bat");
+						message + "\n" + "To start Sphere Combat Arena, enter the following at a command prompt:\n" + "cd "
+						+ installDir.getAbsolutePath() + "\n" + "sphere-combat-arena.bat");
 			}
 		} else if (osName.toLowerCase().indexOf("mac") == 0) {
 			if (osVersion >= 10.1) {
 				JOptionPane.showMessageDialog(null,
-						message + "\n" + "To start Virtual Combat, browse to " + installDir + " then double-click virtual-combat.sh\n");
+						message + "\n" + "To start Sphere Combat Arena, browse to " + installDir + " then double-click sphere-combat-arena.sh\n");
 			} else {
 				JOptionPane.showMessageDialog(null,
-						message + "\n" + "To start Virtual Combat, enter the following at a command prompt:\n"
-						+ installDir.getAbsolutePath() + "/virtual-combat.sh");
+						message + "\n" + "To start Sphere Combat Arena, enter the following at a command prompt:\n"
+						+ installDir.getAbsolutePath() + "/sphere-combat-arena.sh");
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,
-					message + "\n" + "To start Virtual Combat, enter the following at a command prompt:\n"
-					+ installDir.getAbsolutePath() + "/virtual-combat.sh");
+					message + "\n" + "To start Sphere Combat Arena, enter the following at a command prompt:\n"
+					+ installDir.getAbsolutePath() + "/sphere-combat-arena.sh");
 		}
 	}
 
 	private boolean createWindowsShortcuts(File installDir, String runnable, String folder, String name) {
 		int rc = JOptionPane.showConfirmDialog(null,
-				"Would you like to install a shortcut to Virtual Combat in the Start menu? (Recommended)", "Create Shortcuts",
+				"Would you like to install a shortcut to Sphere Combat Arena in the Start menu? (Recommended)", "Create Shortcuts",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 		if (rc != JOptionPane.YES_OPTION) {
@@ -459,7 +459,7 @@ public class AutoExtract implements ActionListener {
 			out.println("link.Arguments = \"\"");
 			out.println("link.Description = \"" + name + "\"");
 			out.println("link.HotKey = \"\"");
-			out.println("link.IconLocation = \"" + escaped(installDir.getAbsolutePath()) + "\\\\" + "virtual-combat.ico,0\"");
+			out.println("link.IconLocation = \"" + escaped(installDir.getAbsolutePath()) + "\\\\" + "sphere-combat-arena.ico,0\"");
 			out.println("link.TargetPath = \"" + escaped(installDir.getAbsolutePath()) + "\\\\" + runnable + "\"");
 			out.println("link.WindowStyle = 1");
 			out.println("link.WorkingDirectory = \"" + escaped(installDir.getAbsolutePath()) + "\"");
@@ -469,7 +469,7 @@ public class AutoExtract implements ActionListener {
 			out.println("link.Arguments = \"\"");
 			out.println("link.Description = \"" + name + "\"");
 			out.println("link.HotKey = \"\"");
-			out.println("link.IconLocation = \"" + escaped(installDir.getAbsolutePath()) + "\\\\" + "virtual-combat.ico,0\"");
+			out.println("link.IconLocation = \"" + escaped(installDir.getAbsolutePath()) + "\\\\" + "sphere-combat-arena.ico,0\"");
 			out.println("link.TargetPath = \"" + escaped(installDir.getAbsolutePath()) + "\\\\" + runnable + "\"");
 			out.println("link.WindowStyle = 1");
 			out.println("link.WorkingDirectory = \"" + escaped(installDir.getAbsolutePath()) + "\"");
@@ -486,8 +486,8 @@ public class AutoExtract implements ActionListener {
 				return false;
 			}
 			JOptionPane.showMessageDialog(null,
-					message + "\n" + "A Virtual Combat program group has been added to your Start menu\n"
-					+ "A Virtual Combat icon has been added to your desktop.");
+					message + "\n" + "A Sphere Combat Arena program group has been added to your Start menu\n"
+					+ "A Sphere Combat Arena icon has been added to your desktop.");
 			if (!shortcutMaker.delete()) {
 				System.err.println("Can't delete: " + shortcutMaker);
 			}

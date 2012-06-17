@@ -8,8 +8,8 @@
     <packaging>pom</packaging>
     <name>Robocode Common POM</name>
     <organization>
-        <name>CodeFest</name>
-        <url>http://itbhu.ac.in/codefest</url>
+        <name>Sphere</name>
+        <url>http://sphere.pl</url>
     </organization>
     <repositories>
         <repository>

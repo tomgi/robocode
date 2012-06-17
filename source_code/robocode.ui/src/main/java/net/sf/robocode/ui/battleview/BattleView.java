@@ -69,6 +69,8 @@ import static java.lang.Math.*;
 public class BattleView extends Canvas {
 	private final static String ROBOCODE_SLOGAN = "Build the best, destroy the rest";
 	private final static String VIRTUAL_COMBAT_SLOGAN = "CODES DO FIGHT.";
+	
+	private final static String SPHERE_COMBAT_ARENA_SLOGAN = "CODES DO FIGHT.";
 
 	private final static Color CANVAS_BG_COLOR = SystemColor.controlDkShadow;
 
@@ -177,6 +179,8 @@ public class BattleView extends Canvas {
 				paintRobocodeLogo((Graphics2D) g);
 			} else if (logo_type.equalsIgnoreCase("VIRTUALCOMBAT")){
 				paintVirtualCombatLogo((Graphics2D) g);
+			}else if (logo_type.equalsIgnoreCase("SPHERECOMBATARENA")){
+				paintSphereCombatArenaLogo((Graphics2D) g);
 			} else {
 				System.out.println("Configured logo not found. Please check robocode/config/battle.properties file");
 			}
@@ -784,7 +788,28 @@ public class BattleView extends Canvas {
 		g.setColor(new Color(0, 0, 0));
 		g.drawString(VIRTUAL_COMBAT_SLOGAN, (float) ((getWidth() - width) / 2.0), (float) (getHeight() / 2.0 + 50));
 	}
+	
+	private void paintSphereCombatArenaLogo(Graphics2D g) {
+		setBackground(Color.BLACK);
+		Image image = null;
+		
+		File file = new File(FileUtil.getImagesDir(), "sphere-background-image.jpg");
+		try {
+			image = ImageIO.read(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		g.drawImage(image, 0, 0, null);
 
+		Font font = new Font("Courier 10 Pitch", Font.BOLD, 28);
+		int width = g.getFontMetrics(font).stringWidth(SPHERE_COMBAT_ARENA_SLOGAN);
+
+		g.setTransform(new AffineTransform());
+		g.setFont(font);
+		g.setColor(new Color(0, 0, 0));
+		g.drawString(SPHERE_COMBAT_ARENA_SLOGAN, (float) ((getWidth() - width) / 2.0), (float) (getHeight() / 2.0 + 50));
+	}
+	
 
 	private class BattleObserver extends BattleAdaptor {
 		public BattleObserver(IWindowManager windowManager) {

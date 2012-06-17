@@ -11,13 +11,11 @@
  *******************************************************************************/
 package net.sf.robocode.ui;
 
-
 import net.sf.robocode.battle.BattleProperties;
 import net.sf.robocode.battle.BattleResultsTableModel;
 import robocode.control.events.BattleCompletedEvent;
 
 import javax.swing.*;
-
 
 /**
  * @author Pavel Savara (original)
@@ -36,11 +34,19 @@ public interface IWindowManagerExt extends IWindowManager {
 	void showFaq();
 
 	void showOnlineHelp();
-	
+
+	void showCodeFestVirtualCombatForum();
+
 	void showSphereCombatArenaHome();
-	
+
+	void showCodeFestVirtualCombatHome();
+
 	void showSphereHome();
-	
+
+	void showCodeFestHome();
+
+	void showCodeFestPromoVideo();
+
 	void showSphereVideo();
 
 	void showJavaDocumentation();
@@ -65,7 +71,8 @@ public interface IWindowManagerExt extends IWindowManager {
 
 	void showRobotExtractor(JFrame owner);
 
-	void showNewBattleDialog(BattleProperties battleProperties, boolean openBattle);
+	void showNewBattleDialog(BattleProperties battleProperties,
+			boolean openBattle);
 
 	boolean closeRobocodeEditor();
 
