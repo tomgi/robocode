@@ -46,8 +46,8 @@ public class BattleProperties implements Serializable {
 			BATTLE_EXTENSION_FILENAME = "robocode.battle.extensionFile",
 			BATTLE_EXTENSION_PACKAGE = "robocode.battle.extensionPackage";
 	
-	private int battlefieldWidth = 800;
-	private int battlefieldHeight = 600;
+	private int battlefieldWidth = 900;
+	private int battlefieldHeight = 1200;
 	private int numRounds = 10;
 	private double gunCoolingRate = 0.1;
 	private long inactivityTime = 450;

@@ -129,7 +129,7 @@ public class BattleView extends Canvas {
 		this.windowManager = (IWindowManagerExt) windowManager;
 		this.imageManager = imageManager; 
 
-		battleField = new BattleField(800, 600);
+		battleField = new BattleField(900, 1200);
 
 		new BattleObserver(windowManager);
 
