@@ -47,7 +47,7 @@ public class RobocodeRunner {
 		BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
 		RobotSpecification[] selectedRobots = engine.getLocalRepository("sample.RamFire, sample.Corners");
 
-		BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots);
+		BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots, "");
 
 		// Run our specified battle and let it run till it's over
 		engine.runBattle(battleSpec, true/* wait till the battle is over */);

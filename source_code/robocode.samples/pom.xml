@@ -11,6 +11,23 @@
     <artifactId>robocode.samples</artifactId>
     <version>${robocode.version}</version>
     <name>Robocode Samples</name>
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.robocode</groupId>
+            <artifactId>robocode.api</artifactId>
+            <version>${robocode.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.robocode</groupId>
+            <artifactId>robocode.core</artifactId>
+            <version>${robocode.version}</version>
+        </dependency>
+	<dependency>
+            <groupId>net.sf.robocode</groupId>
+            <artifactId>robocode.extensionsApi</artifactId>
+            <version>${robocode.version}</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
