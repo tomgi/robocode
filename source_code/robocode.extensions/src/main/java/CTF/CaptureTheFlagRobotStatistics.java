@@ -123,11 +123,11 @@ public class CaptureTheFlagRobotStatistics extends ContestantStatistics{
 	}
 	
 	public void scoreCapture() {
-		currentScores.set(captureScore, currentScores.get(captureScore) + 500);
+		currentScores.set(captureScore, currentScores.get(captureScore) + 5000);
 		
 		if (parentStats != null)
 		{
-			parentStats.addCapture(500);
+			parentStats.addCapture(5000);
 		}
 	}
 	
